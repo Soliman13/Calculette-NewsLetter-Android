@@ -1,0 +1,2 @@
+include ':app', ':example', ':calculatrice'
+rootProject.name='projet_tp1'
