@@ -1,2 +1,2 @@
-include ':app', ':example', ':calculatrice'
+include ':app', ':example', ':calculatrice', 'gestionarticles'
 rootProject.name='projet_tp1'
