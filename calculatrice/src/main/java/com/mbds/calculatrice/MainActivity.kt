@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun result() {
-        historique.append("$first_term $operation ${resultat.text}\n")
+        historique.append("$first_term $operation ${resultat.text.toString().toFloat()}\n")
         when(operation){
             "+" -> resultat.text = (first_term + resultat.text.toString().toFloat()).toString()
             "-" -> resultat.text = (first_term - resultat.text.toString().toFloat()).toString()
@@ -98,7 +98,10 @@ class MainActivity : AppCompatActivity() {
             R.id.btn_num7 -> resultat.append("7")
             R.id.btn_num8 -> resultat.append("8")
             R.id.btn_num9 -> resultat.append("9")
-            R.id.btn_point -> resultat.append(".")
+            R.id.btn_point ->
+                if (! (resultat.text.contains(".")) ){
+                    resultat.append(".")
+                }
         }
     }
 }
