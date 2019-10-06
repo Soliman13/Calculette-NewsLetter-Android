@@ -26,4 +26,4 @@ Le développement de ce module se doit d'insérer et de récupérer les articles
 
 Nous avons utilisé le plugin RoomDatabase d'Android pour mettre en place les entités et les couches DAO pour manipuler la BDD.
 
-**Cette partie n'est pas finalisé et présente un bug au niveau au niveau du multithreading qui n'est à l'heure actuelle pas fixé.**
+**Ce module n'est pas finalisé et présente un bug au niveau du multithreading qui n'est à l'heure actuelle pas fixé.**
