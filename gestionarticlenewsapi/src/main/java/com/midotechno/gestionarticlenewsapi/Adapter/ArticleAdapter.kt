@@ -33,6 +33,7 @@ class ArticleAdapter(private val dataset: List<Article>) :
             txtdate.text= "Ecrit: " + item.publishedAt
             txtlien.text = "Plus d'info: " + item.url
 
+            // chargement de l'image avec coil
             chargerImageURL(item.urlToImage)
         }
 
@@ -43,6 +44,7 @@ class ArticleAdapter(private val dataset: List<Article>) :
 //          val url = URL(urlImage)
 //          val img = BitmapFactory.decodeStream(url.openConnection().getInputStream())
 
+            // verification si l'article contient une image
             if (url.isNullOrEmpty()){
                 image.load(R.mipmap.mbds_foreground) // load normal image si l'article ne contient pas d'image
             }else{

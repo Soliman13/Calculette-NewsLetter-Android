@@ -5,7 +5,8 @@ import retrofit2.http.GET
 
 interface ArticleService {
 
-    @GET("top-headlines?country=us&apiKey=53006b6b094544f4833ce5d0ee66e18b")
+    // All articles about Bitcoin from the last month, sorted by recent first
+    @GET("everything?q=bitcoin&from=2019-09-06&sortBy=publishedAt&apiKey=ea0de83e47864485b1514477f0ea732f")
     fun list(): Call<ArticleReponse>
 
 }

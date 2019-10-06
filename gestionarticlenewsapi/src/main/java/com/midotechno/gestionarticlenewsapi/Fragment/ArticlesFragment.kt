@@ -51,6 +51,7 @@ class ArticlesFragment : Fragment() {
 
             if (result.articles == null || result.status == "Nok"){
 //                Toast.makeText(context,"Erreur de chargement données",Toast.LENGTH_SHORT)
+                // le cas ou le service ne returne pas d'article
             }else{
                 bindData(result.articles)
             }

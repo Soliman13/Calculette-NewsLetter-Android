@@ -4,9 +4,11 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+<!--    couleur en cas de non selection menu-->
     <color name="selectionmenu">#4aa87a</color>
 
 
+    <!--    color background-->
     <color name="backgroundappli">#B4BBB4</color>
     <color name="backgroundlist">#ffffff</color>
 </resources>

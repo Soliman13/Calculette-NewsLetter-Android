@@ -24,14 +24,17 @@ class MainActivity : AppCompatActivity() {
 
         val footer : BottomNavigationView = findViewById(R.id.footer_menu)
 
+        // le fragement par default ecran d'accueil
         supportFragmentManager.beginTransaction().replace(R.id.fragement1,PrincipaleFragment()).commit()
 
+        // listener sur le click on footer menu
         footer.setOnNavigationItemSelectedListener {
             item -> modificationFragement(item.itemId)
         }
 
     }
 
+    // appel de l'ecran principale Accueil
     fun pagePrincipale() {
 
         //créer une instance du fragment
@@ -50,6 +53,8 @@ class MainActivity : AppCompatActivity() {
 
     fun secondPage() {
 
+        // verification de la connection
+        // si y a pas de connection afficher fragement de message d'erreur
         if ( connecterInternet(applicationContext) == false ){
             //Toast.makeText(applicationContext , "Pas de connexion internet pour afficher les news" , Toast.LENGTH_SHORT)
             //créer une instance du fragment

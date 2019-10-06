@@ -8,10 +8,10 @@
         <item>Autre ...</item>
     </string-array>
 
-
+<!--titre des menu-->
     <string name="bottom_navigation_accueil">Accueil</string>
     <string name="bottom_navigation_article">News</string>
-
+<!--mode non connecté message-->
     <string name="noConnection">No Connection Veuillez Vérifier Votre Connextion ! </string>
 
 </resources>
