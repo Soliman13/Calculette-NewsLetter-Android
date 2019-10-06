@@ -12,7 +12,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var historique:TextView
     private var first_term = 0f
     private var operation = ""
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
