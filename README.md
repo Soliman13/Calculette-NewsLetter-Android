@@ -6,9 +6,11 @@ Il est constitué de 3 modules : **calculatrice**, **gestionarticlenewsapi** et 
 
 ## calculatrice
 
-Nous avons développé une calculatrice qui posséde les mêmes fonctionnalités que la calculatrice présente sur les terminaux Apple, à savoir les opérations de base ainsi que le pourcentage sur la saisie, la valeur absolue ou négative, ainsi que le clear. Ajoutés à cela quelques drawables histoire d'apporter un petit design particulier à notre app !
+Nous avons développé une calculatrice qui posséde les mêmes fonctionnalités que la calculatrice présente sur les terminaux Apple, à savoir les opérations de base ainsi que le pourcentage sur la saisie, la valeur absolue ou négative, ainsi que le clear. 
 
 http://thesweetsetup.com/wp-content/uploads/2015/12/apple-calculator-portrait.jpg
+
+Ajoutés à cela quelques drawables histoire d'apporter un petit design particulier à notre app !
 
 ## gestionarticlenewsapi
 
