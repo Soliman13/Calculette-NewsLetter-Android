@@ -1,2 +1,7 @@
-include ':app', ':example', ':calculatrice', 'gestionarticles'
+include ':app', ':calculatrice', ':gestionarticlenewsapi' , ':gestionarticles'
 rootProject.name='projet_tp1'
+
+
+
+//, ':example'
+//,

@@ -1,17 +1,23 @@
 package com.mbds.calculatrice
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.NestedScrollView
 import kotlin.math.absoluteValue
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var resultat:TextView
     private lateinit var historique:TextView
-    private var first_term = 0f
-    private var operation = ""
+    private var premier_terme = 0f
+    private var second_terme = 0f
+    private var apresResultat = false
+    private var operation = ' '
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -20,29 +26,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun operation(view: View) {
-        if(resultat.text.toString().toFloat() == 0f) return
-
         when(view.id){
             R.id.btn_addition -> {
-                ope()
-                operation = "+"
+                ope('+')
             }
             R.id.btn_soustraction -> {
-                ope()
-                operation = "-"
+                ope('-')
             }
             R.id.btn_multiplication -> {
-                ope()
-                operation = "*"
+                ope('*')
             }
             R.id.btn_division -> {
-                ope()
-                operation = "/"
+                ope('/')
             }
             R.id.btn_clear -> {
                 resultat.text = "0"
-                first_term = 0f
-                operation = ""
+                premier_terme = 0f
+                second_terme = 0f
+                operation = ' '
             }
             R.id.btn_negatif_positif -> {
                 if(resultat.text.startsWith("-")){
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             R.id.btn_clear_histo -> historique.text = " "
-            R.id.btn_pourcentage -> resultat.text = (resultat.text.toString().toFloat()/100).toString()
+            R.id.btn_pourcentage -> if(!resultat.text.endsWith(".")) resultat.text = (resultat.text.toString().toFloat()/100).toString()
             R.id.btn_resultat -> {
                 result()
             }
@@ -62,29 +63,56 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun result() {
-        historique.append("$first_term $operation ${resultat.text.toString().toFloat()}\n")
-        when(operation){
-            "+" -> resultat.text = (first_term + resultat.text.toString().toFloat()).toString()
-            "-" -> resultat.text = (first_term - resultat.text.toString().toFloat()).toString()
-            "*" -> resultat.text = (first_term * resultat.text.toString().toFloat()).toString()
-            "/" -> resultat.text = (first_term / resultat.text.toString().toFloat()).toString()
+        if (operation.equals(' ') || resultat.text.endsWith(".")) return
+
+        if(premier_terme == resultat.text.toString().toFloat()){ // cas de double égal
+            historique.append("$premier_terme $operation $second_terme = ")
+            when(operation){
+                '+' -> resultat.text = (premier_terme + second_terme).toString()
+                '-' -> resultat.text = (premier_terme - second_terme).toString()
+                '*' -> resultat.text = (premier_terme * second_terme).toString()
+                '/' -> resultat.text = (premier_terme / second_terme).toString()
+            }
+            historique.append("${resultat.text}\n")
         }
-        first_term = resultat.text.toString().toFloat()
+        else{
+            second_terme = resultat.text.toString().toFloat()
+            historique.append("$premier_terme $operation ${resultat.text.toString().toFloat()} = ")
+            when(operation){
+                '+' -> resultat.text = (premier_terme + resultat.text.toString().toFloat()).toString()
+                '-' -> resultat.text = (premier_terme - resultat.text.toString().toFloat()).toString()
+                '*' -> resultat.text = (premier_terme * resultat.text.toString().toFloat()).toString()
+                '/' -> resultat.text = (premier_terme / resultat.text.toString().toFloat()).toString()
+            }
+            historique.append("${resultat.text}\n")
+        }
+        premier_terme = resultat.text.toString().toFloat()
+        apresResultat = true
     }
 
-    private fun ope() {
-        if(first_term != 0f && first_term.toString() != resultat.text.toString()){
-//            historique.append("$first_term $operation ${resultat.text}\n")
+    private fun ope(op: Char) {
+        if(resultat.text.endsWith(".")) return
+        else operation = op
+
+        if(premier_terme != 0f && premier_terme.toString() != resultat.text.toString()){
             result()
             return
         }
-        first_term = resultat.text.toString().toFloat()
+        premier_terme = resultat.text.toString().toFloat()
         resultat.text = "0"
+        apresResultat = false
     }
 
     fun addNum(view: View) {
         if(resultat.text.startsWith('0')){
             resultat.text = ""
+        }
+        if(apresResultat){
+            resultat.text = ""
+            premier_terme = 0f
+            second_terme = 0f
+            operation = ' '
+            apresResultat = false
         }
         when(view.id){
             R.id.btn_num0 -> resultat.append("0")
@@ -98,7 +126,7 @@ class MainActivity : AppCompatActivity() {
             R.id.btn_num8 -> resultat.append("8")
             R.id.btn_num9 -> resultat.append("9")
             R.id.btn_point ->
-                if (! (resultat.text.contains(".")) ){
+                if (!resultat.text.contains(".")){
                     resultat.append(".")
                 }
         }

@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Mbds News</string>
+    <string-array name="planetes">
+        <item>Mars</item>
+        <item>Terre</item>
+        <item>Afrique</item>
+        <item>Europe</item>
+        <item>Autre ...</item>
+    </string-array>
+
+
+    <string name="bottom_navigation_accueil">Accueil</string>
+    <string name="bottom_navigation_article">News</string>
+
+    <string name="noConnection">No Connection Veuillez Vérifier Votre Connextion ! </string>
+
+</resources>
