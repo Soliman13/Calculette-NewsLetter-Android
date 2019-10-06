@@ -8,6 +8,16 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import kotlin.math.absoluteValue
+import android.os.Looper.getMainLooper
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.os.Handler
+import android.os.Looper
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,11 +28,15 @@ class MainActivity : AppCompatActivity() {
     private var apresResultat = false
     private var operation = ' '
 
+    private lateinit var db : AppDatabase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         resultat = findViewById(R.id.tv_resultat)
         historique = findViewById(R.id.tv_contenu_historique)
+
+        db = AppDBProvider.getInstance(this)
     }
 
     fun operation(view: View) {
@@ -65,29 +79,37 @@ class MainActivity : AppCompatActivity() {
     private fun result() {
         if (operation.equals(' ') || resultat.text.endsWith(".")) return
 
-        if(premier_terme == resultat.text.toString().toFloat()){ // cas de double égal
-            historique.append("$premier_terme $operation $second_terme = ")
+        var addTohistorique = ""
+        if(premier_terme == resultat.text.toString().toFloat() && second_terme != 0f){ // cas de double égal
+            addTohistorique = addTohistorique +"$premier_terme $operation $second_terme = "
             when(operation){
                 '+' -> resultat.text = (premier_terme + second_terme).toString()
                 '-' -> resultat.text = (premier_terme - second_terme).toString()
                 '*' -> resultat.text = (premier_terme * second_terme).toString()
                 '/' -> resultat.text = (premier_terme / second_terme).toString()
             }
-            historique.append("${resultat.text}\n")
+            addTohistorique = addTohistorique + "${resultat.text}\n"
         }
         else{
             second_terme = resultat.text.toString().toFloat()
-            historique.append("$premier_terme $operation ${resultat.text.toString().toFloat()} = ")
+            addTohistorique = addTohistorique + "$premier_terme $operation ${resultat.text.toString().toFloat()} = "
             when(operation){
                 '+' -> resultat.text = (premier_terme + resultat.text.toString().toFloat()).toString()
                 '-' -> resultat.text = (premier_terme - resultat.text.toString().toFloat()).toString()
                 '*' -> resultat.text = (premier_terme * resultat.text.toString().toFloat()).toString()
                 '/' -> resultat.text = (premier_terme / resultat.text.toString().toFloat()).toString()
             }
-            historique.append("${resultat.text}\n")
+            addTohistorique = addTohistorique + "${resultat.text}\n"
         }
         premier_terme = resultat.text.toString().toFloat()
         apresResultat = true
+
+
+        historique.append(addTohistorique)
+        var th = Thread(Runnable { db.getHistoriqueDao().insert(Historique(1,addTohistorique)) })
+        th.start()
+
+
     }
 
     private fun ope(op: Char) {
